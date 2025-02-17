@@ -1,4 +1,4 @@
-package com.example.security;
+package com.example.security.controller;
 
 import java.util.List;
 

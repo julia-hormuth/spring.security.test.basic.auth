@@ -1,0 +1,37 @@
+server:
+  port: 8081
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:demo
+    driverClassName: org.h2.Driver
+    username: sa
+    password: password
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      dialect: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: true
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/oauth2-demo
+      client:
+        registration:
+          keycloak:
+            client-id: spring-boot-client
+            client-secret: cc3HA3hfV7E59bcm7hCUgPTNgCT6XJJF
+            authorization-grant-type: authorization_code
+            scope: openid,profile,email
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8080/realms/oauth2-demo
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
