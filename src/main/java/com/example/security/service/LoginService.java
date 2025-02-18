@@ -1,19 +1,14 @@
 package com.example.security.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.security.model.User;
 import com.example.security.repository.UserRepository;
 
-import jakarta.annotation.PostConstruct;
-
 @Service
-public class CreateUser {
+public class LoginService {
 
     @Autowired
     private UserRepository userRepository;
@@ -21,12 +16,14 @@ public class CreateUser {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @PostConstruct
-    void create() {
-        User user = new User();
-        user.setUsername("testuser");
-        user.setPassword(passwordEncoder.encode("12345"));
-        user.setRoles(List.of("USER"));
-        userRepository.save(user);
+    public String login(String username, String password) {
+
+        User user = userRepository.findByUsername(username);
+
+        if (user != null && passwordEncoder.matches(password, user.getPassword())) {
+            return "Erfolgreich eingeloggt!";
+        } else {
+            return "Falscher Benutzername oder Passwort!";
+        }
     }
 }
