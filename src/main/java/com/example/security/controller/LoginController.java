@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.security.service.LoginService;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -28,7 +29,7 @@ public class LoginController {
         return ResponseEntity.ok(output);
     }
 
-    @PostMapping("/private")
+    @GetMapping("/private")
     public String login2() {
         return "Öffentliche API - Keine Authentifizierung erforderlich!";
     }
