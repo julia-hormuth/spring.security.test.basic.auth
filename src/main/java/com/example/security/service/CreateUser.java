@@ -18,14 +18,11 @@ public class CreateUser {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
     @PostConstruct
     void create() {
         User user = new User();
         user.setUsername("hormuth");
-        user.setPassword(passwordEncoder.encode("12345"));
+       // user.setPassword(passwordEncoder.encode("12345"));
         user.setRoles(List.of("USER"));
         userRepository.save(user);
     }
