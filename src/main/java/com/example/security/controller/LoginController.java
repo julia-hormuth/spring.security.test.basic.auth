@@ -1,7 +1,7 @@
 package com.example.security.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,11 +18,14 @@ public class LoginController {
     LoginService loginService;
 
     @PostMapping("/login")
-    public String login(@RequestBody LoginDto loginDto) {
+    public ResponseEntity<LoginDto> login(@RequestBody LoginDto loginDto) {
         if (loginDto.getUsername() == null || loginDto.getPassword() == null) {
-            return "Falscher Benutzername oder Passwort!";
+            return ResponseEntity.badRequest().build();
         }
-        return loginService.login(loginDto.getUsername(), loginDto.getPassword());
+        String token = loginService.login(loginDto.getUsername(), loginDto.getPassword());
+        LoginDto output = new LoginDto();
+        output.setToken(token);
+        return ResponseEntity.ok(output);
     }
 
     @PostMapping("/private")
